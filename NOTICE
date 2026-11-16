@@ -1,0 +1,6 @@
+simply-cpp-pdf417
+Copyright 2026 Roelof Rossouw
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Uses zxing-cpp (Apache License 2.0) and OpenCV (Apache License 2.0), linked from the system.

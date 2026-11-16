@@ -1,0 +1,1 @@
+PDF417 for simply-cpp: barcodes found in a picture and decoded, poor scans too (zxing-cpp, OpenCV)

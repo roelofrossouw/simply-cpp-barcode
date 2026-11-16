@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/SimplyCppFunctions.cmake")
+include(CMakeFindDependencyMacro)
+
+find_or_install_package(sc-core simply-cpp-dev simply-cpp 2.0.0)
+# The libraries link zxing-cpp and OpenCV (core, imgproc).
+find_or_install_package(ZXing libzxing-dev zxing-cpp)
+find_dependency(OpenCV COMPONENTS core imgproc)
+
+include("${CMAKE_CURRENT_LIST_DIR}/sc-pdf417Targets.cmake")
