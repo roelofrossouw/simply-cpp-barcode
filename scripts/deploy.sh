@@ -6,7 +6,7 @@
 #
 # Usage: scripts/deploy.sh [server] [user]
 
-module="sc-pdf417"
+module="sc-barcode"
 server="${1:-build}"
 user="${2:-root}"
 scriptfile=$(realpath "$0")

@@ -1,8 +1,8 @@
-// sc::pdf417::read on barcodes made here (zxing-cpp's writer, 2.3 or newer; skipped (77) without
+// sc::barcode::pdf417 on barcodes made here (zxing-cpp's writer, 2.3 or newer; skipped (77) without
 // it): sharp, at about 1.5 pixels to a module and softened as a 200 dpi scan, two in one picture
 // (top to bottom), one too small, a stride wider than the picture, tries used up (found, not
 // decoded), nothing there, and the arguments refused.
-#include <sc_pdf417.h>
+#include <sc_barcode.h>
 #include <sc_test.h>
 
 #include <iostream>
@@ -24,7 +24,7 @@ namespace {
         return out;
     }
 
-    sc::pdf417::grey_view view_of(const cv::Mat &grey) {
+    sc::barcode::grey_view view_of(const cv::Mat &grey) {
         return {grey.data, {grey.cols, grey.rows}, static_cast<std::ptrdiff_t>(grey.step)};
     }
 
@@ -42,7 +42,7 @@ int main() {
 
     SECTION("Sharp: decoded at once");
     {
-        const auto found = sc::pdf417::read(view_of(sharp));
+        const auto found = sc::barcode::pdf417{}.read(view_of(sharp));
         CHECK_EQ(found.size(), std::size_t{1});
         CHECK(!found.empty() && found[0].decoded() && found[0].bytes == bytes && found[0].tries == 1);
         CHECK(!found.empty() && found[0].where.left() >= 40 && found[0].where.width() > 1000);
@@ -53,7 +53,7 @@ int main() {
         cv::Mat soft;
         cv::resize(sharp, soft, {}, 0.5, 0.5, cv::INTER_AREA);
         cv::GaussianBlur(soft, soft, {0, 0}, 0.5);
-        const auto found = sc::pdf417::read(view_of(soft));
+        const auto found = sc::barcode::pdf417{}.read(view_of(soft));
         CHECK(found.size() == 1 && found[0].bytes == bytes);
     }
 
@@ -64,7 +64,7 @@ int main() {
 
     SECTION("1.3 pixels to a module, blurred: decoded on a later try, enlarged");
     {
-        const auto found = sc::pdf417::read(view_of(scan), {.max_tries = 400});
+        const auto found = sc::barcode::pdf417{sc::barcode::effort{.max_tries = 400}}.read(view_of(scan));
         CHECK_EQ(found.size(), std::size_t{1});
         CHECK_MSG(!found.empty() && found[0].bytes == bytes, "after " + std::to_string(found.empty() ? 0 : found[0].tries) + " tries");
         CHECK(!found.empty() && found[0].scale > 3 && found[0].tries > 1);
@@ -72,9 +72,9 @@ int main() {
 
     SECTION("Tries used up: found, not decoded");
     {
-        const auto found = sc::pdf417::read(view_of(scan), {.max_tries = 0});
+        const auto found = sc::barcode::pdf417{sc::barcode::effort{.max_tries = 0}}.read(view_of(scan));
         CHECK(found.size() == 1 && !found[0].decoded() && found[0].tries == 0);
-        const auto late = sc::pdf417::read(view_of(scan), {.time_limit = std::chrono::seconds{0}});
+        const auto late = sc::barcode::pdf417{sc::barcode::effort{.time_limit = std::chrono::seconds{0}}}.read(view_of(scan));
         CHECK(late.size() == 1 && !late[0].decoded());
     }
 
@@ -85,7 +85,7 @@ int main() {
         drawn(other).copyTo(both(cv::Rect{0, 0, sharp.cols, sharp.rows}));
         sharp.copyTo(both(cv::Rect{0, sharp.rows, sharp.cols, sharp.rows}));
         const cv::Mat left = both(cv::Rect{0, 0, sharp.cols, both.rows}); // its rows are both.cols bytes apart
-        const auto found = sc::pdf417::read(view_of(left));
+        const auto found = sc::barcode::pdf417{}.read(view_of(left));
         CHECK_EQ(found.size(), std::size_t{2});
         CHECK(found.size() == 2 && found[0].bytes == other && found[1].bytes == bytes && found[0].where.top() < found[1].where.top());
     }
@@ -94,16 +94,16 @@ int main() {
     {
         cv::Mat small;
         cv::resize(sharp, small, {}, 0.15, 0.15, cv::INTER_AREA);
-        CHECK(sc::pdf417::read(view_of(small), {.max_tries = 5}).empty());
-        CHECK_EQ(sc::pdf417::read(view_of(sharp), {.smallest = 0}).size(), std::size_t{1});
+        CHECK(sc::barcode::pdf417{sc::barcode::effort{.max_tries = 5}}.read(view_of(small)).empty());
+        CHECK_EQ(sc::barcode::pdf417{sc::barcode::effort{.smallest = 0}}.read(view_of(sharp)).size(), std::size_t{1});
     }
 
     SECTION("Nothing there; the arguments refused");
     {
         const cv::Mat blank{300, 400, CV_8UC1, cv::Scalar{255}};
-        CHECK(sc::pdf417::read(view_of(blank)).empty());
-        CHECK_THROWS_AS((void) sc::pdf417::read({}), std::invalid_argument);
-        CHECK_THROWS_AS((void) sc::pdf417::read({blank.data, {400, 300}, 100}), std::invalid_argument);
+        CHECK(sc::barcode::pdf417{}.read(view_of(blank)).empty());
+        CHECK_THROWS_AS((void) sc::barcode::pdf417{}.read({}), std::invalid_argument);
+        CHECK_THROWS_AS((void) sc::barcode::pdf417{}.read({blank.data, {400, 300}, 100}), std::invalid_argument);
     }
 
     TEST_SUMMARY();

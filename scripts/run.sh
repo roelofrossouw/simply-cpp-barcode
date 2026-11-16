@@ -6,7 +6,7 @@
 #
 # Runs on the server, in the directory deploy.sh synced to.
 
-module="sc-pdf417"
+module="sc-barcode"
 version=""
 ubuntu_codename=$(lsb_release -sc)
 build_directory="cmake-build-$ubuntu_codename"

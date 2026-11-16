@@ -6,7 +6,7 @@
 #
 # Runs on the server, in the directory deploy.sh synced to.
 
-module="sc-pdf417"
+module="sc-barcode"
 scriptfile=$(realpath "$0")
 scriptpath="${scriptfile%/*}"
 dirpath=$(realpath "$scriptpath"/..)

@@ -1,4 +1,4 @@
-set(SC_TEST_LINK_LIBRARIES sc-pdf417)
+set(SC_TEST_LINK_LIBRARIES sc-barcode)
 
 # Barcodes made with zxing-cpp's writer (2.3 or newer; skipped, 77, before it).
 add_sc_test(pdf417 LABELS unit TIMEOUT 120)
