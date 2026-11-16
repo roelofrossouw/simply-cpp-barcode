@@ -47,9 +47,12 @@ cmake -S . -B build && cmake --build build && ctest --test-dir build --output-on
 ```
 
 It needs sc-core, zxing-cpp (`libzxing-dev`; Homebrew `zxing-cpp`) and OpenCV (`libopencv-dev`;
-Homebrew `opencv`), found or installed by CMake. The test makes barcodes with zxing-cpp's writer
-(2.3 or newer; skipped where it's older, as Ubuntu noble's 2.2) and reads them sharp, as a 200 dpi
-scan, blurred past a first reading, two in one picture, too small, and with the tries used up.
+Homebrew `opencv`), found or installed by CMake. The test makes barcodes with zxing-cpp's writer where
+it has one (Homebrew's; Ubuntu's zxing-cpp is built without it, so there the same barcodes come from
+`tests/data`, rewritten by `SC_BARCODE_WRITE_FIXTURES=1`) and reads them sharp, as a 200 dpi scan,
+blurred past a first reading, two in one picture, too small, and with the tries used up. It passes
+with zxing-cpp 2.2 (Ubuntu noble), 2.3 (resolute) and 3.1 (Homebrew); 2.2 decodes the hardest scans
+less often.
 
 `sc-barcode-demo PICTURE` prints the barcodes in a picture and what each holds.
 
