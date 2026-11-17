@@ -10,7 +10,7 @@ message(STATUS "SimplyCPP ${SC_MODULE} Version: ${SC_VERSION}")
 
 # sc-core's rect and size (and sc::params for the example); zxing-cpp (Apache-2.0) decodes, OpenCV
 # enlarges and thresholds; both from the system and kept out of the header.
-find_or_install_package(sc-core simply-cpp-dev simply-cpp 2.2.0)
+find_or_install_package(sc-core simply-cpp-dev simply-cpp 3.0.0)
 find_or_install_package(ZXing libzxing-dev zxing-cpp)
 find_or_install_package(OpenCV libopencv-dev opencv COMPONENTS core imgproc imgcodecs) # imgcodecs: the example only
 
@@ -41,4 +41,4 @@ add_sc_example(sc-barcode-demo LINK_LIBRARIES sc::sc-core sc::sc-barcode-shared 
 
 # OpenCV's runtime package is named per release (406t64 on noble, 410 on resolute): the dev
 # packages bring the right ones.
-package_sc_module(DEV_DEPENDS "simply-cpp-dev (>= 2.0.0~)" libzxing-dev libopencv-dev)
+package_sc_module(DEV_DEPENDS "simply-cpp-dev (>= 3.0.0~)" libzxing-dev libopencv-dev)
