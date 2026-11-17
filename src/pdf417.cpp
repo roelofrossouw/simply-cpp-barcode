@@ -1,4 +1,4 @@
-#include <pdf417.h>
+#include <sc/barcode/pdf417.h>
 
 #include <ZXing/ReadBarcode.h>
 #include <opencv2/imgproc.hpp>

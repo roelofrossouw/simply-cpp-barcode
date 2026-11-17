@@ -17,8 +17,8 @@
 //     for (const auto &code: sc::barcode::pdf417{}.read(picture))
 //         if (code.decoded()) use(code.bytes);  // the barcode's bytes, as they were encoded
 
-#include <rect.h>
-#include <size.h>
+#include <sc/core/rect.h>
+#include <sc/core/size.h>
 
 #include <chrono>
 #include <cstddef>
@@ -60,6 +60,6 @@ namespace sc::barcode {
 }
 
 // The readers, one header each
-#include <pdf417.h>
+#include <sc/barcode/pdf417.h>
 
 #endif

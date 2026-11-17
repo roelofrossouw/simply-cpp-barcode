@@ -2,7 +2,7 @@
 #define SC_BARCODE_PDF417_H
 // sc::barcode::pdf417, PDF417 barcodes (ISO/IEC 15438) read from a picture; part of sc_barcode.h.
 
-#include <sc_barcode.h>
+#include <sc/barcode/sc_barcode.h>
 
 namespace sc::barcode {
     // The PDF417 barcodes in a picture. A reader holds only its effort: read() may be called from
