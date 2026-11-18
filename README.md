@@ -10,7 +10,7 @@ which stays small (no image library).
 | `sc::barcode::pdf417` | PDF417 (ISO/IEC 15438), also from poor scans |
 
 ```cpp
-#include <sc/barcode/sc_barcode.h>
+#include <sc/barcode/barcode.h>
 
 const sc::barcode::grey_view picture{pixels, {width, height}, stride};   // 8-bit grey, not owned
 const sc::barcode::pdf417 reader{{.max_tries = 1500, .time_limit = std::chrono::seconds{20}}};

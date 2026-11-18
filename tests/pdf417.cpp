@@ -4,7 +4,7 @@
 // 200 dpi scan, blurred past a first reading, two in one picture (top to bottom), one too small, a
 // stride wider than the picture, tries used up (found, not decoded), nothing there, and the arguments
 // refused.
-#include <sc/barcode/sc_barcode.h>
+#include <sc/barcode/barcode.h>
 #include <sc_test.h>
 
 #include <opencv2/imgcodecs.hpp>

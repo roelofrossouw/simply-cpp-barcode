@@ -1,7 +1,7 @@
 // sc-barcode's example: the PDF417 barcodes in a picture, with where they are and what they hold.
 //
 //     sc-barcode-demo PICTURE
-#include <sc/barcode/sc_barcode.h>
+#include <sc/barcode/barcode.h>
 
 #include <sc/core/params.h>
 
